@@ -1,7 +1,7 @@
 #include "uip.h"
 #include "uip_arp.h"
+/*#include "httpd.h"*/
 #include "network-device.h"
-#include "httpd.h"
 #include "timer.h"
 
 #define BUF ((struct uip_eth_hdr *)&uip_buf[0])

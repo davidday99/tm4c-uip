@@ -62,9 +62,9 @@ main(void)
   tapdev_init();
   uip_init();
 
-  uip_ipaddr(ipaddr, 192,168,87,1);
+  uip_ipaddr(ipaddr, 192,168,0,2);
   uip_sethostaddr(ipaddr);
-  uip_ipaddr(ipaddr, 192,168,1,66);
+  uip_ipaddr(ipaddr, 192,168,0,1);
   uip_setdraddr(ipaddr);
   uip_ipaddr(ipaddr, 255,255,255,0);
   uip_setnetmask(ipaddr);
@@ -73,7 +73,7 @@ main(void)
   
     telnetd_init();
   
-    /*hello_world_init();*/
+  /*  hello_world_init();*/
 
   /*  {
       u8_t mac[6] = {1,2,3,4,5,6};

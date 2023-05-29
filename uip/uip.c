@@ -681,6 +681,7 @@ uip_add_rcv_nxt(u16_t n)
 void
 uip_process(u8_t flag)
 {
+  char ipbuf[16];
   register struct uip_conn *uip_connr = uip_conn;
 
 #if UIP_UDP
@@ -691,7 +692,10 @@ uip_process(u8_t flag)
   
   uip_sappdata = uip_appdata = &uip_buf[UIP_IPTCPH_LEN + UIP_LLH_LEN];
 
-  /* Check if we were invoked because of a poll request for a
+  unsigned char o1, o2, o3, o4;
+  unsigned short srcport, destport;
+
+    /* Check if we were invoked because of a poll request for a
      particular connection. */
   if(flag == UIP_POLL_REQUEST) {
     if((uip_connr->tcpstateflags & UIP_TS_MASK) == UIP_ESTABLISHED &&
@@ -827,7 +831,19 @@ uip_process(u8_t flag)
   UIP_STAT(++uip_stat.ip.recv);
 
   /* Start of IP input header processing code. */
-  
+  o1 = BUF->destipaddr[0] & 0xFF;
+  o2 = (BUF->destipaddr[0] & 0xFF00) >> 8;
+  o3 = BUF->destipaddr[1] & 0xFF;
+  o4 = (BUF->destipaddr[1] & 0xFF00) >> 8;
+
+
+  srcport = HTONS(BUF->srcport);
+  destport = HTONS(BUF->destport);
+
+  snprintf(ipbuf, sizeof(ipbuf), "%u.%u.%u.%u", o1, o2, o3, o4);
+  printf("IP address: %s, source port: %u, dest. port: %u\n", ipbuf, srcport, destport);
+
+
 #if UIP_CONF_IPV6
   /* Check validity of the IP header. */
   if((BUF->vtc & 0xf0) != 0x60)  { /* IP version and header length. */

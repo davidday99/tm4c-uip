@@ -23,10 +23,6 @@ clean:
 	-$(RM) $(OBJ)
 	-$(RM) $(BIN)
 
-#$(OBJ)/%.o: $(SRCS)%/.c
-	#$(MKDIR)
-	#$(CC) -o $@ $^ -c $(CFLAGS)
-
 $(OBJ)/%.o: apps/$(APP)/%.c
 	$(MKDIR)
 	$(CC) -o $@ $^ -c $(CFLAGS)

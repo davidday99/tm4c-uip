@@ -36,8 +36,8 @@
 
 #define UIP_DRIPADDR0   192
 #define UIP_DRIPADDR1   168
-#define UIP_DRIPADDR2   0
-#define UIP_DRIPADDR3   1
+#define UIP_DRIPADDR2   87
+#define UIP_DRIPADDR3   200
 
 #include <fcntl.h>
 #include <stdlib.h>
@@ -119,14 +119,14 @@ tapdev_read(void)
     perror("tap_dev: tapdev_read: read");
   }
 
-  /*  printf("--- tap_dev: tapdev_read: read %d bytes\n", ret);*/
-  /*  {
+    printf("--- tap_dev: tapdev_read: read %d bytes\n", ret);
+    {
     int i;
     for(i = 0; i < 20; i++) {
       printf("%x ", uip_buf[i]);
     }
     printf("\n");
-    }*/
+    }
   /*  check_checksum(uip_buf, ret);*/
   return ret;
 }

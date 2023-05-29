@@ -62,16 +62,16 @@ main(void)
   tapdev_init();
   uip_init();
 
-  uip_ipaddr(ipaddr, 127,0,0,1);
+  uip_ipaddr(ipaddr, 192,168,87,1);
   uip_sethostaddr(ipaddr);
   uip_ipaddr(ipaddr, 192,168,1,66);
   uip_setdraddr(ipaddr);
   uip_ipaddr(ipaddr, 255,255,255,0);
   uip_setnetmask(ipaddr);
 
-  httpd_init();
+  /*httpd_init();*/
   
-  /*  telnetd_init();*/
+    telnetd_init();
   
     /*hello_world_init();*/
 

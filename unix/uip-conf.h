@@ -145,8 +145,8 @@ typedef unsigned short uip_stats_t;
    our project. */
 /*#include "smtp.h"*/
 //#include "hello-world.h"
-/*#include "telnetd.h"*/
-#include "webserver.h"
+#include "telnetd.h"
+//#include "webserver.h"
 /*#include "dhcpc.h"*/
 /*#include "resolv.h"*/
 /*#include "webclient.h"*/

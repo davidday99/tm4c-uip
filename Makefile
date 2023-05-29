@@ -1,17 +1,18 @@
 NAME=uip
 OBJ=obj
 BIN=build
-APP=webserver
+APP=telnetd
 SRCS = $(filter-out  uip/uip-split.c apps/$(APP)/httpd-fsdata.c,\
 			$(wildcard apps/$(APP)/*.c) \
 			$(wildcard uip/*.c) \
 			$(wildcard unix/*.c) \
+			$(wildcard lib/*.c) \
 		)
 OBJS = $(addprefix $(OBJ)/, $(notdir $(SRCS:.c=.o)))
 
 $(info $(SRCS))
 
-CFLAGS = -g -Iapps/$(APP) -Iuip -Iunix
+CFLAGS = -g -Iapps/$(APP) -Iuip -Iunix -Ilib
 
 RM = rm -rf
 MKDIR = @mkdir -p $(@D)
@@ -35,6 +36,10 @@ $(OBJ)/%.o: uip/%.c
 	$(CC) -o $@ $^ -c $(CFLAGS)
 
 $(OBJ)/%.o: unix/%.c
+	$(MKDIR)
+	$(CC) -o $@ $^ -c $(CFLAGS)
+
+$(OBJ)/%.o: lib/%.c
 	$(MKDIR)
 	$(CC) -o $@ $^ -c $(CFLAGS)
 

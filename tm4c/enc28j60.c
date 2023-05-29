@@ -131,8 +131,8 @@ static uint8_t read_control_register(struct ENC28J60 *enc28j60, uint8_t reg, uin
 static void write_control_register(struct ENC28J60 *enc28j60, uint8_t reg, uint8_t data);
 static uint16_t read_phy_register(struct ENC28J60 *enc28j60, uint8_t phy_addr);
 static void write_phy_register(struct ENC28J60 *enc28j60, uint8_t phy_addr, int16_t value);
-static void read_buffer_memory(struct ENC28J60 *enc28j60, uint32_t *data, uint16_t bytes);
-static void write_buffer_memory(struct ENC28J60 *enc28j60, uint32_t *data, uint16_t bytes);
+static void read_buffer_memory(struct ENC28J60 *enc28j60, uint8_t *data, uint16_t bytes);
+static void write_buffer_memory(struct ENC28J60 *enc28j60, uint8_t *data, uint16_t bytes);
 static void bit_field_set(struct ENC28J60 *enc28j60, uint8_t reg, uint8_t bitfield);
 static void bit_field_clear(struct ENC28J60 *enc28j60, uint8_t reg, uint8_t bitfield);
 static void system_reset(struct ENC28J60 *enc28j60);
@@ -479,19 +479,21 @@ static void write_phy_register(struct ENC28J60 *enc28j60, uint8_t phy_addr, int1
     bit_field_set(enc28j60, ECON1, bank);
 }
 
-static void read_buffer_memory(struct ENC28J60 *enc28j60, uint32_t *data, uint16_t bytes) {
+static void read_buffer_memory(struct ENC28J60 *enc28j60, uint8_t *data, uint16_t bytes) {
     uint8_t cmd = RBM_OPCODE | RBM_ARG0;
+    uint32_t tmp;
     GPIOPinWrite(enc28j60->cs_pin_base, enc28j60->cs_pin, 0);
     SSIDataPut(enc28j60->ssi_base, cmd);
-    SSIDataGet(enc28j60->ssi_base, data);
+    SSIDataGet(enc28j60->ssi_base, &tmp);
     for (int i = 0; i < bytes; i++) {
         SSIDataPut(enc28j60->ssi_base, NOP);
-        SSIDataGet(enc28j60->ssi_base, &data[i]);
+        SSIDataGet(enc28j60->ssi_base, &tmp);
+        data[i] = tmp;
     }
     GPIOPinWrite(enc28j60->cs_pin_base, enc28j60->cs_pin, enc28j60->cs_pin);
 }
 
-static void write_buffer_memory(struct ENC28J60 *enc28j60, uint32_t *data, uint16_t bytes) {
+static void write_buffer_memory(struct ENC28J60 *enc28j60, uint8_t *data, uint16_t bytes) {
     uint32_t trash;
     uint8_t cmd = WBM_OPCODE | WBM_ARG0;
     GPIOPinWrite(enc28j60->cs_pin_base, enc28j60->cs_pin, 0);

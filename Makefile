@@ -20,7 +20,9 @@ SRCS = $(filter-out  uip/uip-split.c apps/$(APP)/httpd-fsdata.c,\
 OBJS = $(addprefix $(OBJ)/, $(SRCS:.c=.o))
 
 CFLAGS = -g -Iapps/$(APP) -Iuip -Iunix -Ilib -Itm4c -Itm4c/inc -MD -Wextra -Wall -Wno-missing-braces -std=c99 
-CFLAGS += -mcpu=cortex-m4 -mfloat-abi=softfp -nostdlib -ffreestanding 
+CFLAGS += -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -nostdlib -ffreestanding 
+
+LDFLAGS = -Wl,-T$(LD_SCRIPT) -Wl,-eResetISR -Llib -Wl,-l:libdriver.a
 
 RM = rm -rf
 MKDIR = @mkdir -p $(@D)
@@ -37,7 +39,7 @@ $(OBJ)/%.o: %.c
 
 $(BIN)/$(NAME).elf: $(OBJS)
 	$(MKDIR)
-	$(CC) -o $@ $^ $(CFLAGS) -Wl,-T$(LD_SCRIPT) -Wl,-eResetISR
+	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
 	$(OBJCOPY) -O binary $@ $(BIN)/$(NAME).bin
 
 $(BIN)/$(NAME).bin: $(BIN)/$(NAME).elf

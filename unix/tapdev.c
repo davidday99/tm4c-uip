@@ -51,6 +51,8 @@
 #include <sys/uio.h>
 #include <sys/socket.h>
 
+#define linux
+
 #ifdef linux
 #include <sys/ioctl.h>
 #include <linux/if.h>

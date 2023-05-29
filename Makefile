@@ -1,7 +1,7 @@
 NAME=uip
 OBJ=obj
 BIN=build
-APP=telnetd
+APP=hello-world
 SRCS = $(filter-out  uip/uip-split.c apps/$(APP)/httpd-fsdata.c,\
 			$(wildcard apps/$(APP)/*.c) \
 			$(wildcard uip/*.c) \

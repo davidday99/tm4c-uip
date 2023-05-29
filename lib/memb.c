@@ -44,6 +44,7 @@
  * \author Adam Dunkels <adam@sics.se>
  */
 #include <string.h>
+#include <stddef.h>
 
 #include "memb.h"
 

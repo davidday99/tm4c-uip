@@ -1,5 +1,5 @@
-# TM4C Bare Metal Template
-This repo contains boilerplate code for starting a new embedded C project targeting the TM4C MCU.
+# TM4C uIP Port
+This repo contains port of uIP to the TM4C MCU. The project structure is based on a template from [tm4c-bare-metal-repo](https://github.com/davidday99/tm4c-bare-metal-template).
 
 ## Included Make Recipes
 1. `all`: build both an ELF and a flat binary.
